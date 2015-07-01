@@ -207,8 +207,6 @@ public enum CompilationLevel {
         // TODO(johnlenz): enable peephole type based optimization.
         break;
       case INFOMAXIMUM_OPTIMIZATIONS:
-        options.inlineProperties = true;
-        break;
       case WHITESPACE_ONLY:
         break;
     }
