@@ -187,6 +187,8 @@ public enum CompilationLevel {
   private static void applyInfomaximumCompilationOptions(CompilerOptions options) {
     applyFullCompilationOptions(options);
     options.setRemoveUnusedPrototypeProperties(false);
+    options.setRemoveUnusedPrototypePropertiesInExterns(false);
+    options.setRemoveUnusedClassProperties(false);
   }
 
   /**
