@@ -698,6 +698,9 @@ public class CompilerOptions implements Serializable, Cloneable {
   /** Processes jQuery aliases */
   public boolean jqueryPass;
 
+  /** Processes Infomaximum aliases */
+  public boolean infomaximumPass;
+
   /** Processes AngularJS-specific annotations */
   boolean angularPass;
 

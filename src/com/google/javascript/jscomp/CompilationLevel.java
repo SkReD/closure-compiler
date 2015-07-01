@@ -46,6 +46,11 @@ public enum CompilationLevel {
    * names and variables, removing code which is never called, etc.
    */
   ADVANCED_OPTIMIZATIONS,
+
+  /**
+   * INFOMAXIMUM_OPTIMIZATIONS mostly as ADVANCED_OPTIMIZATIONS but with some features disabeld
+   */
+  INFOMAXIMUM_OPTIMIZATIONS,
   ;
 
   private CompilationLevel() {}
@@ -60,6 +65,9 @@ public enum CompilationLevel {
         break;
       case ADVANCED_OPTIMIZATIONS:
         applyFullCompilationOptions(options);
+        break;
+      case INFOMAXIMUM_OPTIMIZATIONS:
+        applyInfomaximumCompilationOptions(options);
         break;
       default:
         throw new RuntimeException("Unknown compilation level.");
@@ -170,10 +178,15 @@ public enum CompilationLevel {
     options.setCrossModuleMethodMotion(true);
 
     // Call optimizations
-    options.setDevirtualizePrototypeMethods(true);
+    options.setDevirtualizePrototypeMethods(false);
     options.optimizeParameters = true;
     options.optimizeReturns = true;
     options.optimizeCalls = true;
+  }
+
+  private static void applyInfomaximumCompilationOptions(CompilerOptions options) {
+    applyFullCompilationOptions(options);
+    options.setRemoveUnusedPrototypeProperties(false);
   }
 
   /**
@@ -190,6 +203,9 @@ public enum CompilationLevel {
         break;
       case SIMPLE_OPTIMIZATIONS:
         // TODO(johnlenz): enable peephole type based optimization.
+        break;
+      case INFOMAXIMUM_OPTIMIZATIONS:
+        options.inlineProperties = true;
         break;
       case WHITESPACE_ONLY:
         break;

@@ -263,7 +263,10 @@ class AnalyzePrototypeProperties implements CompilerPass {
             if (n.getParent().isAssign() && n.getNext() != null) {
               String rValueName = getPrototypePropertyNameFromRValue(n);
               if (rValueName != null) {
-                return;
+                if (!(compiler.getCodingConvention() instanceof InfomaximumCodingConvention))
+                {
+                  return;
+                }
               }
             }
           }

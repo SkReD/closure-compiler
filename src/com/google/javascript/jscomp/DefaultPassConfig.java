@@ -662,6 +662,11 @@ public final class DefaultPassConfig extends PassConfig {
       passes.add(renameProperties);
     }
 
+    if (options.infomaximumPass)
+    {
+      passes.add(infomaximumStringsRename);
+    }
+
     // Reserve global names added to the "windows" object.
     if (options.reserveRawExports) {
       passes.add(gatherRawExports);
@@ -1566,6 +1571,15 @@ public final class DefaultPassConfig extends PassConfig {
       clearTypedScope();
     }
   }
+
+  /** Collapses names in the global scope. */
+  final PassFactory infomaximumStringsRename =
+          new PassFactory("infomaximumStringsRename", true) {
+            @Override
+            protected CompilerPass create(AbstractCompiler compiler) {
+              return new InfomaximumStringRenames((Compiler)compiler);
+            }
+          };
 
   /** Checks global name usage. */
   private final PassFactory checkGlobalNames =

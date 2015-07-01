@@ -37,6 +37,10 @@ import java.util.Map;
  */
 public interface CodingConvention extends Serializable {
 
+  public boolean isRenamable(Node n);
+
+  public boolean isLocalization(Node n);
+
   /**
    * This checks whether a given variable name, such as a name in all-caps
    * should be treated as if it had the @const annotation.

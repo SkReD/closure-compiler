@@ -384,6 +384,12 @@ class RenameProperties implements CompilerPass {
      */
     private void maybeMarkCandidate(Node n) {
       String name = n.getString();
+
+      if (!compiler.getCodingConvention().isRenamable(n))
+      {
+        return;
+      }
+
       if (!externedNames.contains(name)) {
         stringNodesToRename.add(n);
         countPropertyOccurrence(name);

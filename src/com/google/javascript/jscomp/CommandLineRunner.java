@@ -354,7 +354,8 @@ public class CommandLineRunner extends
         usage = "Specifies the compilation level to use. Options: " +
             "WHITESPACE_ONLY, " +
             "SIMPLE, " +
-            "ADVANCED")
+            "ADVANCED, " +
+            "INFOMAXIMUM")
     private String compilationLevel = "SIMPLE";
     private CompilationLevel compilationLevelParsed = null;
 
@@ -606,10 +607,10 @@ public class CommandLineRunner extends
             CompilationLevel.SIMPLE_OPTIMIZATIONS,
             "SIMPLE_OPTIMIZATIONS",
             CompilationLevel.SIMPLE_OPTIMIZATIONS,
-            "ADVANCED",
-            CompilationLevel.ADVANCED_OPTIMIZATIONS,
             "ADVANCED_OPTIMIZATIONS",
-            CompilationLevel.ADVANCED_OPTIMIZATIONS);
+            CompilationLevel.ADVANCED_OPTIMIZATIONS,
+            "INFOMAXIMUM_OPTIMIZATIONS",
+            CompilationLevel.INFOMAXIMUM_OPTIMIZATIONS);
 
     Flags() {
       parser = new CmdLineParser(this);
@@ -1058,7 +1059,10 @@ public class CommandLineRunner extends
         conv = CodingConventions.getDefault();
       } else if (flags.processJqueryPrimitives) {
         conv = new JqueryCodingConvention();
-      } else {
+      } else if (flags.compilationLevel.equals("INFOMAXIMUM_OPTIMIZATIONS")) {
+        conv = new InfomaximumCodingConvention();
+      }
+      else {
         conv = new ClosureCodingConvention();
       }
 
@@ -1118,6 +1122,8 @@ public class CommandLineRunner extends
     CompilerOptions options = new CompilerOptions();
     if (flags.processJqueryPrimitives) {
       options.setCodingConvention(new JqueryCodingConvention());
+    } else if (options.infomaximumPass) {
+      options.setCodingConvention(new InfomaximumCodingConvention());
     } else {
       options.setCodingConvention(new ClosureCodingConvention());
     }
@@ -1156,6 +1162,8 @@ public class CommandLineRunner extends
 
     options.jqueryPass = CompilationLevel.ADVANCED_OPTIMIZATIONS == level &&
         flags.processJqueryPrimitives;
+
+    options.infomaximumPass = CompilationLevel.INFOMAXIMUM_OPTIMIZATIONS == level;
 
     options.angularPass = flags.angularPass;
 

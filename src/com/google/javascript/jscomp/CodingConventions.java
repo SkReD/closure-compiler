@@ -56,6 +56,17 @@ public final class CodingConventions {
    */
   public static class Proxy implements CodingConvention {
 
+    @Override
+    public boolean isRenamable(Node n) {
+      return nextConvention.isRenamable(n);
+    }
+
+    @Override
+    public boolean isLocalization(Node n)
+    {
+      return nextConvention.isLocalization(n);
+    }
+
     protected final CodingConvention nextConvention;
 
     protected Proxy(CodingConvention convention) {
@@ -267,6 +278,16 @@ public final class CodingConventions {
   private static class DefaultCodingConvention implements CodingConvention {
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean isRenamable(Node n) {
+      return true;
+    }
+
+    @Override
+    public boolean isLocalization(Node n) {
+      return false;
+    }
 
     @Override
     public boolean isConstant(String variableName) {
