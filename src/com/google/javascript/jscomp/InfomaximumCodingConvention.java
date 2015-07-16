@@ -26,7 +26,7 @@ public class InfomaximumCodingConvention extends CodingConventions.Proxy {
 	public boolean isRenamable(Node n) {
 		String name = n.getString();
 
-		if ((n.isName() || n.isQualifiedName() || n.isStringKey() || n.isFunction() || ((n.isString() && n.getParent().isGetProp()))) &&
+		if (name.length() > 2 && (n.isName() || n.isQualifiedName() || n.isStringKey() || n.isFunction() || ((n.isString() && n.getParent().isGetProp()))) &&
 				name.matches("^[A-Z_].+") && !name.toUpperCase().equals(name)
 				&& !name.startsWith("View")
 				&& !name.endsWith("Set")
