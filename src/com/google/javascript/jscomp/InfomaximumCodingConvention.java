@@ -1,6 +1,11 @@
 package com.google.javascript.jscomp;
 
+import com.google.common.collect.ImmutableList;
+import com.google.javascript.jscomp.newtypes.JSType;
 import com.google.javascript.rhino.Node;
+import com.google.javascript.rhino.jstype.JSTypeNative;
+
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,6 +33,7 @@ public class InfomaximumCodingConvention extends CodingConventions.Proxy {
 
 		if (name.length() > 2 && (n.isName() || n.isQualifiedName() || n.isStringKey() || n.isFunction() || ((n.isString() && n.getParent().isGetProp()))) &&
 				name.matches("^[A-Z_].+") && !name.toUpperCase().equals(name)
+				&& !name.matches("^Block|Model|Manager$")
 				&& !name.startsWith("View")
 				&& !name.endsWith("Set")
 				//TODO: Michail Shipov. This condition should be reviewed and removed.
@@ -130,5 +136,21 @@ public class InfomaximumCodingConvention extends CodingConventions.Proxy {
 		}
 
 		return false;
+	}
+
+
+	@Override
+	public Collection<AssertionFunctionSpec> getAssertionFunctions() {
+		return ImmutableList.of(
+				new AssertionFunctionSpec("Assert", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertSilent", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertMethod", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertRequestRequiredValue", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertRequiredValue", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertRequiredParameter", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertRequiredParameter", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertInterface", JSType.TRUTHY),
+				new AssertionFunctionSpec("AssertComplex", JSType.TRUTHY)
+		);
 	}
 }
