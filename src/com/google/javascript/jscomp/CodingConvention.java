@@ -37,8 +37,24 @@ import java.util.Map;
  */
 public interface CodingConvention extends Serializable {
 
+  /**
+   * @param definitionSite function definition
+   * @return boolean
+   */
+  public boolean isFunctionSignatureRewriteAllowed(DefinitionSite definitionSite);
+
+
+  /**
+   * @param n function node
+   * @return boolean
+   */
   public boolean isRenamable(Node n);
 
+
+  /**
+   * @param n function node
+   * @return boolean
+   */
   public boolean isLocalization(Node n);
 
   /**

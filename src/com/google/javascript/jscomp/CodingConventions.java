@@ -57,6 +57,9 @@ public final class CodingConventions {
   public static class Proxy implements CodingConvention {
 
     @Override
+    public boolean isFunctionSignatureRewriteAllowed(DefinitionSite definitionSite) { return nextConvention.isFunctionSignatureRewriteAllowed(definitionSite); };
+
+    @Override
     public boolean isRenamable(Node n) {
       return nextConvention.isRenamable(n);
     }
@@ -278,6 +281,9 @@ public final class CodingConventions {
   private static class DefaultCodingConvention implements CodingConvention {
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean isFunctionSignatureRewriteAllowed(DefinitionSite definitionSite) { return true; }
 
     @Override
     public boolean isRenamable(Node n) {

@@ -28,7 +28,21 @@ public class InfomaximumCodingConvention extends CodingConventions.Proxy {
 		super(convention);
 	}
 
-	public boolean isRenamable(Node n) {
+	public boolean isFunctionSignatureRewriteAllowed(DefinitionSite definitionSite) {
+		Node functionNameNode = null;
+		DefinitionsRemover.Definition definition = definitionSite.definition;
+
+		if (definition instanceof DefinitionsRemover.AssignmentDefinition) {
+			functionNameNode = definitionSite.node.getLastChild();
+		} else if (definition instanceof DefinitionsRemover.NamedFunctionDefinition ||
+				definition instanceof DefinitionsRemover.VarDefinition) {
+			functionNameNode = definitionSite.node;
+		}
+
+		return functionNameNode == null || isRenamable(functionNameNode);
+	}
+
+	public boolean isRenamable(Node n) throws UnsupportedOperationException{
 		String name = n.getString();
 
 		if (name.length() > 2 && (n.isName() || n.isQualifiedName() || n.isStringKey() || n.isFunction() || ((n.isString() && n.getParent().isGetProp()))) &&

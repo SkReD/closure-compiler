@@ -82,7 +82,7 @@ class OptimizeParameters
    * @return Whether the definitionSite represents a function whose call
    *      signature can be modified.
    */
-  private static boolean canChangeSignature(
+  private boolean canChangeSignature(
       DefinitionSite definitionSite, SimpleDefinitionFinder defFinder) {
     Definition definition = definitionSite.definition;
 
@@ -141,6 +141,11 @@ class OptimizeParameters
       }
       Preconditions.checkState(!singleSiteDefinitions.isEmpty());
       Preconditions.checkState(singleSiteDefinitions.contains(definition));
+    }
+
+    if (!compiler.getCodingConvention().isFunctionSignatureRewriteAllowed(definitionSite))
+    {
+      return false;
     }
 
     return true;
