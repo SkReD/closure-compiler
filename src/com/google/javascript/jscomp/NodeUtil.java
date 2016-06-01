@@ -1113,7 +1113,7 @@ public final class NodeUtil {
       ImmutableSet.of(
           "Object", "Array", "String", "Number", "Boolean", "RegExp", "Error");
   private static final Set<String> OBJECT_METHODS_WITHOUT_SIDEEFFECTS =
-      ImmutableSet.of("toString", "valueOf");
+      ImmutableSet.of("toString");
   private static final Set<String> REGEXP_METHODS =
       ImmutableSet.of("test", "exec");
   private static final Set<String> STRING_REGEXP_METHODS =
