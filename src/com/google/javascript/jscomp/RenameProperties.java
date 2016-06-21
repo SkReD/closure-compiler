@@ -311,6 +311,7 @@ class RenameProperties implements CompilerPass {
 
     @Override
     public void visit(NodeTraversal t, Node n, Node parent) {
+      CodingConvention codingConvention = compiler.getCodingConvention();
       switch (n.getType()) {
         case Token.GETPROP:
           Node propNode = n.getFirstChild().getNext();
@@ -320,7 +321,7 @@ class RenameProperties implements CompilerPass {
           break;
         case Token.OBJECTLIT:
           for (Node key = n.getFirstChild(); key != null; key = key.getNext()) {
-            if (!key.isQuotedString()) {
+            if (!key.isQuotedString() && !codingConvention.isObjectLiteralKeyTreatAsQuoted(key)) {
               maybeMarkCandidate(key);
             } else {
               // Ensure that we never rename some other property in a way

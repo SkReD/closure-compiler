@@ -57,6 +57,9 @@ public final class CodingConventions {
   public static class Proxy implements CodingConvention {
 
     @Override
+    public boolean isObjectLiteralKeyTreatAsQuoted(Node n) { return nextConvention.isObjectLiteralKeyTreatAsQuoted(n); }
+
+    @Override
     public boolean isFunctionSignatureRewriteAllowed(DefinitionSite definitionSite) { return nextConvention.isFunctionSignatureRewriteAllowed(definitionSite); };
 
     @Override
@@ -281,6 +284,9 @@ public final class CodingConventions {
   private static class DefaultCodingConvention implements CodingConvention {
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean isObjectLiteralKeyTreatAsQuoted(Node n) { return false; }
 
     @Override
     public boolean isFunctionSignatureRewriteAllowed(DefinitionSite definitionSite) { return true; }

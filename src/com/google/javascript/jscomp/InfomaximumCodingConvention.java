@@ -3,6 +3,7 @@ package com.google.javascript.jscomp;
 import com.google.common.collect.ImmutableList;
 import com.google.javascript.jscomp.newtypes.JSType;
 import com.google.javascript.rhino.Node;
+import com.google.javascript.rhino.Token;
 import com.google.javascript.rhino.jstype.JSTypeNative;
 
 import java.util.Collection;
@@ -26,6 +27,35 @@ public class InfomaximumCodingConvention extends CodingConventions.Proxy {
 	}
 	public InfomaximumCodingConvention(CodingConvention convention) {
 		super(convention);
+	}
+
+	/**
+	 * Model field keys treated as quoted to avoid conflicts with renamed vars and keys
+	 *
+	 * Example:
+	 *
+	 * In this case ID property is treated as quoted
+	 * Model.Base.Fields = {
+	 *     ID:
+	 *     {
+	 *         name: 'id'
+	 *     }
+	 * }
+	 * @return boolean
+	 */
+	public boolean isObjectLiteralKeyTreatAsQuoted(Node objectKey) {
+		Node probablyAssignmentNode = objectKey.getParent().getParent();
+
+		if (probablyAssignmentNode.getType() == Token.ASSIGN)
+		{
+			Node firstChild = probablyAssignmentNode.getFirstChild();
+			if (firstChild.getType() == Token.GETPROP)
+			{
+				return firstChild.getLastChild().getString().equals("Fields");
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isFunctionSignatureRewriteAllowed(DefinitionSite definitionSite) {

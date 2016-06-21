@@ -38,6 +38,12 @@ import java.util.Map;
 public interface CodingConvention extends Serializable {
 
   /**
+   * @param n function node
+   * @return boolean
+   */
+  public boolean isObjectLiteralKeyTreatAsQuoted(Node n);
+
+  /**
    * @param definitionSite function definition
    * @return boolean
    */
