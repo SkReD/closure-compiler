@@ -31,6 +31,7 @@ public class InfomaximumCodingConvention extends CodingConventions.Proxy {
 
 	/**
 	 * Model field keys treated as quoted to avoid conflicts with renamed vars and keys
+	 * Also marked as quoted fields in property FIELDS
 	 *
 	 * Example:
 	 *
@@ -51,7 +52,8 @@ public class InfomaximumCodingConvention extends CodingConventions.Proxy {
 			Node firstChild = probablyAssignmentNode.getFirstChild();
 			if (firstChild.getType() == Token.GETPROP)
 			{
-				return firstChild.getLastChild().getString().equals("Fields");
+				String keyString = firstChild.getLastChild().getString();
+				return keyString.equals("Fields") || keyString.equals("FIELDS");
 			}
 		}
 
